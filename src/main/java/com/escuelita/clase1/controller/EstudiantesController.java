@@ -35,5 +35,10 @@ public class EstudiantesController {
 		
 	}
 	
+	@GetMapping(value = "/estudiantes", produces = { "text/plain" })
+	public String getAllEstudiantesTextPlain() {
+		return estudiantesService.getAllEstudiantesPlainText();
+	}
+	
 	
 }

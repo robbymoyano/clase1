@@ -17,4 +17,20 @@ public class EstudiantesService {
 	public List<Estudiante> getAllEstudiantes(){
 		return mapper.getAllEstudiantes();
 	}
+	
+	
+	public String getAllEstudiantesPlainText(){
+		List<Estudiante> estudiantes = mapper.getAllEstudiantes();
+		
+        StringBuilder sbuilder = new StringBuilder();
+
+		for(Estudiante e : estudiantes) {
+			sbuilder.append(e.getRut() + "|");
+			sbuilder.append(e.getNombre() + "|");
+			sbuilder.append(e.getMail() + "|");
+			sbuilder.append(e.getCiudad() + "\n");
+		}
+		
+		return sbuilder.toString();
+	}
 }
