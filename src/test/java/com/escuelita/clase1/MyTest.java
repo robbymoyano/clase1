@@ -24,19 +24,11 @@ public class MyTest {
 
 	@Test
 	public void testEstudiantes() {
-		List<Estudiante> estudiantes = mapper.getAllEstudiantes();
-		
-		for(Estudiante e: estudiantes) {
-			log.info(e.toString());
-		}
+		mapper.ingresarEstudiante(111, "test", "unitario", "robby@gmail.com", 1);
 		
 	}
 	
-	@Test
-	public void testEstudiante() {
-		Estudiante estudiantes = mapper.getEstudiante(17388023);
-		log.info(estudiantes.toString());	
-	}
+	
 	
 	
 }

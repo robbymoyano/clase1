@@ -9,10 +9,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.escuelita.clase1.exception.EstudiantesException;
 import com.escuelita.clase1.model.Estudiante;
+import com.escuelita.clase1.model.EstudianteRequest;
 import com.escuelita.clase1.model.Message;
 import com.escuelita.clase1.service.EstudiantesService;
 
@@ -68,6 +72,19 @@ public class EstudiantesController {
 			message.setCode(5);
 			message.setMessage("No existe rut");
 			return new ResponseEntity<Object>(message, HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@PostMapping("/estudiantes")
+	public ResponseEntity<Message> ingresarEstudiante(@RequestBody EstudianteRequest request) {
+		log.info(request.toString());
+		try {
+			Message message = estudiantesService.ingresarEstudiante(request);
+			return new ResponseEntity<Message>(message, HttpStatus.CREATED);
+		} catch (EstudiantesException e) {
+			Message message = e.getMessageResponse();
+			return new ResponseEntity<Message>(message, e.getStatus());
+
 		}
 	}
 
