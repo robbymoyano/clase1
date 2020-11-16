@@ -32,5 +32,11 @@ public class MyTest {
 		
 	}
 	
+	@Test
+	public void testEstudiante() {
+		Estudiante estudiantes = mapper.getEstudiante(17388023);
+		log.info(estudiantes.toString());	
+	}
+	
 	
 }

@@ -33,4 +33,8 @@ public class EstudiantesService {
 		
 		return sbuilder.toString();
 	}
+	
+	public Estudiante getEstudiante(long rut) {
+		return mapper.getEstudiante(rut);
+	}
 }
