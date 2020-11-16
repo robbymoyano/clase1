@@ -3,11 +3,14 @@ package com.escuelita.clase1.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.escuelita.clase1.model.Estudiante;
+import com.escuelita.clase1.model.Message;
 import com.escuelita.clase1.service.EstudiantesService;
 
 @RestController
@@ -16,9 +19,21 @@ public class EstudiantesController {
 
 	@Autowired
 	EstudiantesService estudiantesService;
-	
-	@GetMapping(value = "/estudiantes",  produces = { "application/json" })
-	public List<Estudiante> getAllEstudiantes(){
-		return estudiantesService.getAllEstudiantes();
+
+	@GetMapping(value = "/estudiantes", produces = { "application/json" })
+	public ResponseEntity<Object> getAllEstudiantes() {
+		try {
+			List<Estudiante> estudiantes = estudiantesService.getAllEstudiantes();
+			return new ResponseEntity<Object>(estudiantes, HttpStatus.OK);
+		} catch (Exception e) {
+			
+			Message message = new Message();
+			message.setCode(2);
+			message.setMessage(e.getMessage());
+			return new ResponseEntity<Object>(message, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
 	}
+	
+	
 }
