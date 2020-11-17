@@ -1,5 +1,6 @@
 package com.escuelita.clase1.controller;
 
+import java.text.ParseException;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.escuelita.clase1.exception.EstudiantesException;
@@ -88,4 +90,27 @@ public class EstudiantesController {
 		}
 	}
 
+	@GetMapping(value = "/estudiantes/ciudad", produces = { "application/json" })
+	public ResponseEntity<Object> getAllEstudiantesByCiudad(@RequestParam String idCiudad) {
+		int id = 0;
+		try {
+			id = Integer.parseInt(idCiudad);
+		}
+
+		catch(Exception e) {
+			Message message = new Message(2, "Error de parse");
+			return new ResponseEntity<Object>(message, HttpStatus.BAD_REQUEST);
+		}
+		try {
+			
+			List<Estudiante> estudiantes = estudiantesService.getAllEstudiantesByCiudad(id);
+			return new ResponseEntity<Object>(estudiantes, HttpStatus.OK);
+		}
+		
+		catch(Exception e) {
+			Message message = new Message(2, "Error interno");
+			return new ResponseEntity<Object>(message, HttpStatus.INTERNAL_SERVER_ERROR);
+
+		}
+	}
 }

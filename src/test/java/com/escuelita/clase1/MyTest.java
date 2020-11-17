@@ -24,7 +24,10 @@ public class MyTest {
 
 	@Test
 	public void testEstudiantes() {
-		mapper.ingresarEstudiante(111, "test", "unitario", "robby@gmail.com", 1);
+		List<Estudiante> lista= mapper.getAllEstudiantesByCiudad(2);
+		for (Estudiante e :lista) {
+			System.out.println(e.toString());
+		}
 		
 	}
 	

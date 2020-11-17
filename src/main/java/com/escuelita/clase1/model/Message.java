@@ -26,4 +26,14 @@ public class Message {
 		return "Message [code=" + code + ", message=" + message + "]";
 	}
 
+	public Message(int code, String message) {
+		super();
+		this.code = code;
+		this.message = message;
+	}
+	public Message() {
+	
+	}
+	
+
 }

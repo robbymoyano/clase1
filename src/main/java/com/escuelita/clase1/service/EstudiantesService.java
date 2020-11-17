@@ -5,10 +5,10 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.escuelita.clase1.controller.EstudiantesController;
 import com.escuelita.clase1.exception.EstudiantesException;
 import com.escuelita.clase1.mapper.EstudiantesMapper;
 import com.escuelita.clase1.model.Estudiante;
@@ -54,18 +54,30 @@ public class EstudiantesService {
 		log.info("{}", mailValido);
 
 		if (!mailValido) {
-			Message message = new Message();
-			message.setCode(2);
-			message.setMessage("Mail no valido");
+			Message message = new Message(2, "Mail no valido");
 			throw new EstudiantesException("Mail no valido", message, HttpStatus.BAD_REQUEST);
 		}
 
-		mapper.ingresarEstudiante(request.getRut(), request.getNombre(), request.getApellido(), request.getMail(),
-				request.getCiudad());
-		Message message = new Message();
-		message.setCode(0);
-		message.setMessage("OK");
+		try {
+			mapper.ingresarEstudiante(request.getRut(), request.getNombre(), request.getApellido(), request.getMail(),
+					request.getCiudad());
+		} catch (Exception e) {
+			e.printStackTrace();
+			if (e instanceof DataIntegrityViolationException) {
+				Message message = new Message(2, e.getMessage());
+				throw new EstudiantesException(e.getMessage(), message, HttpStatus.BAD_REQUEST);
+			}
+			Message message = new Message(2, "Error en la db");
+			throw new EstudiantesException("Error en la db", message, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		Message message = new Message(0, "OK");
 		return message;
 
+	}
+	
+	
+	public List<Estudiante> getAllEstudiantesByCiudad(int idCiudad){
+		return mapper.getAllEstudiantesByCiudad(idCiudad);
 	}
 }
