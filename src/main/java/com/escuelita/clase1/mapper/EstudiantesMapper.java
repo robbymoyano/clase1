@@ -20,7 +20,7 @@ public interface EstudiantesMapper {
 	public Estudiante getEstudiante(long rut);
 	
 	@Insert("insert into estudiantes values (#{rut}, #{nombre}, #{apellido}, #{mail}, #{ciudad})")
-	public void ingresarEstudiante(long rut, String nombre, String apellido, String mail, int ciudad);
+	public void ingresarEstudiante(long rut, String nombre, String apellido, String mail, int ciudad) throws Exception;
 	
 	@Select("select rut, nombre, apellido, mail, c.ciudad from estudiantes e, ciudad c "
 			+ "where e.id_ciudad = c.id and c.id = #{idCiudad}")

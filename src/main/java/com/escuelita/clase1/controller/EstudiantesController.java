@@ -22,6 +22,10 @@ import com.escuelita.clase1.model.EstudianteRequest;
 import com.escuelita.clase1.model.Message;
 import com.escuelita.clase1.service.EstudiantesService;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
 @RequestMapping("api")
 public class EstudiantesController {
@@ -31,6 +35,11 @@ public class EstudiantesController {
 
 	private final Logger log = LoggerFactory.getLogger(EstudiantesController.class);
 
+	@ApiOperation(value = "Lista los Estudiantes", notes = "Lista todos los estudiantes de la db")
+	@ApiResponses(value={
+			@ApiResponse(code=200, message="OK", response=Estudiante.class, responseContainer = "List"),
+			@ApiResponse(code=500, message="Internal Server Error", response=Message.class)
+	})
 	@GetMapping(value = "/estudiantes", produces = { "application/json" })
 	public ResponseEntity<Object> getAllEstudiantes() {
 		try {
