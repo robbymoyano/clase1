@@ -2,12 +2,13 @@ package com.escuelita.clase1;
 
 import static org.mockito.Mockito.doThrow;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 
@@ -17,7 +18,7 @@ import com.escuelita.clase1.model.EstudianteRequest;
 import com.escuelita.clase1.model.Message;
 import com.escuelita.clase1.service.EstudiantesService;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class IngresaTest {
 
 	@InjectMocks
@@ -44,7 +45,7 @@ public class IngresaTest {
 
 		} catch (EstudiantesException ex) {
 			System.out.println(ex.getStatus());
-			Assert.assertEquals(ex.getStatus(), HttpStatus.BAD_REQUEST);
+			Assertions.assertEquals(ex.getStatus(), HttpStatus.BAD_REQUEST);
 
 		}
 	}
@@ -66,7 +67,7 @@ public class IngresaTest {
 
 		} catch (EstudiantesException ex) {
 			System.out.println(ex.getStatus());
-			Assert.assertEquals(ex.getStatus(), HttpStatus.INTERNAL_SERVER_ERROR);
+			Assertions.assertEquals(ex.getStatus(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -81,7 +82,7 @@ public class IngresaTest {
 
 		try {
 			Message message = service.ingresarEstudiante(e);
-			Assert.assertEquals(message.getCode(), 0);
+			Assertions.assertEquals(message.getCode(), 0);
 
 		} catch (EstudiantesException ex) {
 			System.out.println(ex.getStatus());
